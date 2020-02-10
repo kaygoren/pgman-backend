@@ -8,6 +8,7 @@ import yte.pgman.controller.dto.ConfigurationDTO;
 import yte.pgman.repository.pojo.Configuration;
 import yte.pgman.service.ConfigurationService;
 
+import java.sql.SQLException;
 import java.util.List;
 
 
@@ -15,28 +16,25 @@ import java.util.List;
 @RequestMapping("/configuration")
 public class ConfigurationControllerImpl implements ConfigurationController {
 
-    private final ConfigurationService configurationService;
-
     @Autowired
-    public ConfigurationControllerImpl(ConfigurationService configurationService) {
-        this.configurationService = configurationService;
-    }
+    private ConfigurationService configurationService;
 
     @PostMapping("/save")
     @Override
-    public void saveConfiguration(@RequestBody List<ConfigurationDTO> configurationDTOList) {
+    public void saveConfiguration(@RequestBody List<ConfigurationDTO> configurationDTOList) throws SQLException {
 
         for(ConfigurationDTO configurationDTO: configurationDTOList) {
-            Configuration configuration = new Configuration();
-            BeanUtils.copyProperties(configurationDTO, configuration);
+            Configuration configuration = new Configuration(configurationDTO.getConfigurationID(), configurationDTO.getConfigurationKey(), configurationDTO.getConfigurationValue());
             configurationService.saveConfiguration(configuration);
         }
+//        Configuration configuration = new Configuration(configurationDTO.getConfigurationID(), configurationDTO.getConfigurationKey(), configurationDTO.getConfigurationValue());
+//        configurationService.saveConfiguration(configuration);
     }
 
 
     @GetMapping("/conf")
     @Override
-    public ConfigurationDTO getConfigurationWithID(@RequestParam int id) {
+    public ConfigurationDTO getConfigurationWithID(@RequestParam int id) throws SQLException {
 
         Configuration configuration = configurationService.getConfigurationWithID(id);
         return new ConfigurationDTO(configuration);

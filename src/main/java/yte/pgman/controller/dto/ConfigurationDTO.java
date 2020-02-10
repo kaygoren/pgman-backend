@@ -2,39 +2,45 @@ package yte.pgman.controller.dto;
 
 import yte.pgman.repository.pojo.Configuration;
 
+import java.io.Serializable;
+
 public class ConfigurationDTO {
 
-    private String ConfigurationKey;
-    private String ConfigurationValue;
-    private int ConfigurationID;
+    private int configurationID;
+    private String configurationKey;
+    private String configurationValue;
+
+    public ConfigurationDTO() {
+
+    }
 
     public ConfigurationDTO(Configuration configuration) {
-        this.ConfigurationKey = configuration.getKey();
-        this.ConfigurationValue = configuration.getValue();
-        this.ConfigurationID = configuration.getId();
+        this.configurationID = configuration.getId();
+        this.configurationKey = configuration.getKey();
+        this.configurationValue = configuration.getValue();
     }
 
     public String getConfigurationKey() {
-        return ConfigurationKey;
+        return configurationKey;
     }
 
     public void setConfigurationKey(String configurationKey) {
-        ConfigurationKey = configurationKey;
+        this.configurationKey = configurationKey;
     }
 
     public String getConfigurationValue() {
-        return ConfigurationValue;
+        return configurationValue;
     }
 
     public void setConfigurationValue(String configurationValue) {
-        ConfigurationValue = configurationValue;
+        this.configurationValue = configurationValue;
     }
 
     public int getConfigurationID() {
-        return ConfigurationID;
+        return configurationID;
     }
 
     public void setConfigurationID(int configurationID) {
-        ConfigurationID = configurationID;
+        this.configurationID = configurationID;
     }
 }

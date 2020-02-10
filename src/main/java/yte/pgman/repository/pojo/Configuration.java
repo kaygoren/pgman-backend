@@ -10,10 +10,10 @@ public class Configuration {
 
     }
 
-    public Configuration(String key, String value, int id) {
+    public Configuration(int id, String key, String value) {
+        this.id = id;
         this.key = key;
         this.value = value;
-        this.id = id;
     }
 
     public String getKey() {

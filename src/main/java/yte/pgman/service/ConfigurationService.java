@@ -1,12 +1,11 @@
 package yte.pgman.service;
 
-
-import org.springframework.stereotype.Service;
 import yte.pgman.repository.pojo.Configuration;
+import java.sql.SQLException;
 
-@Service
+
 public interface ConfigurationService {
 
-    void saveConfiguration(Configuration configuration);
-    Configuration getConfigurationWithID(int id);
+    void saveConfiguration(Configuration configuration) throws SQLException;
+    Configuration getConfigurationWithID(int id) throws SQLException;
 }
