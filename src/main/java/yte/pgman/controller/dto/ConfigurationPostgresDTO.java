@@ -1,22 +1,22 @@
 package yte.pgman.controller.dto;
 
-import yte.pgman.repository.pojo.ConfigurationPostgresql;
+import yte.pgman.repository.pojo.ConfigurationPostgres;
 
 
-public class ConfigurationPostgresqlDTO {
+public class ConfigurationPostgresDTO {
 
     private int id;
     private String key;
     private String value;
 
-    public ConfigurationPostgresqlDTO() {
+    public ConfigurationPostgresDTO() {
 
     }
 
-    public ConfigurationPostgresqlDTO(ConfigurationPostgresql configurationPostgresql) {
-        this.id = configurationPostgresql.getId();
-        this.key = configurationPostgresql.getKey();
-        this.value = configurationPostgresql.getValue();
+    public ConfigurationPostgresDTO(ConfigurationPostgres configurationPostgres) {
+        this.id = configurationPostgres.getId();
+        this.key = configurationPostgres.getKey();
+        this.value = configurationPostgres.getValue();
     }
 
     public String getKey() {
