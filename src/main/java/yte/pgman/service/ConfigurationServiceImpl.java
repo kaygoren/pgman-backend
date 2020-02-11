@@ -4,7 +4,8 @@ package yte.pgman.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import yte.pgman.repository.ConfigurationRepository;
-import yte.pgman.repository.pojo.Configuration;
+import yte.pgman.repository.pojo.ConfigurationPghba;
+import yte.pgman.repository.pojo.ConfigurationPostgresql;
 
 import java.sql.SQLException;
 
@@ -16,12 +17,17 @@ public class ConfigurationServiceImpl implements ConfigurationService {
 
 
     @Override
-    public void saveConfiguration(Configuration configuration) throws SQLException {
-        configurationRepository.saveConfiguration(configuration);
+    public void saveConfigurationPostgresql(ConfigurationPostgresql configurationPostgresql) throws SQLException {
+        configurationRepository.saveConfigurationPostgresql(configurationPostgresql);
     }
 
     @Override
-    public Configuration getConfigurationWithID(int id) throws SQLException {
+    public void saveConfigurationPghba(ConfigurationPghba configurationPghba) throws SQLException {
+        configurationRepository.saveConfigurationPghba(configurationPghba);
+    }
+
+    @Override
+    public ConfigurationPostgresql getConfigurationWithID(int id) throws SQLException {
         return configurationRepository.getConfigurationWithID(id);
     }
 }

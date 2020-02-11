@@ -1,16 +1,14 @@
 package yte.pgman.repository.pojo;
 
-public class Configuration {
+public class ConfigurationPostgresql {
 
     private String key;
     private String value;
     private int id;
 
-    public Configuration() {
+    public ConfigurationPostgresql() { }
 
-    }
-
-    public Configuration(int id, String key, String value) {
+    public ConfigurationPostgresql(int id, String key, String value) {
         this.id = id;
         this.key = key;
         this.value = value;
