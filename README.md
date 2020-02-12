@@ -1,2 +1,2 @@
 # pgman-backend
-pgman-webclient'tan "post request"i alıp postgresql database'e kaydetme
+http://localhost:3000'de çalışan frontendten atılan post requesti alıp postgresql database'ine kaydetme/güncelleme işlemi yapar.
