@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import yte.pgman.controller.dto.ConfigurationPghbaDTO;
 import yte.pgman.controller.dto.ConfigurationPostgresDTO;
-import yte.pgman.repository.pojo.ConfigurationPghba;
 import yte.pgman.repository.pojo.ConfigurationPghbaList;
 import yte.pgman.repository.pojo.ConfigurationPostgres;
 import yte.pgman.repository.pojo.ConfigurationPostgresList;
@@ -22,28 +21,43 @@ public class ConfigurationControllerImpl implements ConfigurationController {
     @Autowired
     private ConfigurationService configurationService;
 
-
     @CrossOrigin(origins = "http://localhost:3000")
-    @PostMapping("/save/postgresql/{tableName}")
+    @PostMapping("/add/postgresql/{tableName}")
     @Override
-    public void savePostgresConf(@PathVariable String tableName, @RequestBody List<ConfigurationPostgresDTO> configurationPostgresDTOList) throws SQLException {
+    public void addPostgresConf(@PathVariable String tableName, @RequestBody List<ConfigurationPostgresDTO> configurationPostgresDTOList) throws SQLException {
         ConfigurationPostgresList configurationPostgresList = new ConfigurationPostgresList(configurationPostgresDTOList);
-        configurationService.save(tableName, configurationPostgresList.getConfigurationPostgresList());
+        configurationService.savePostgresConf(tableName, "add", configurationPostgresList.getConfigurationPostgresList());
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
-    @PostMapping("/save/hba/{tableName}")
+    @PostMapping("/replace/postgresql/{tableName}")
     @Override
-    public void savePghbaConf(@PathVariable String tableName, @RequestBody List<ConfigurationPghbaDTO> configurationPghbaDTOList) throws SQLException {
+    public void replacePostgresConf(@PathVariable String tableName, @RequestBody List<ConfigurationPostgresDTO> configurationPostgresDTOList) throws SQLException {
+        ConfigurationPostgresList configurationPostgresList = new ConfigurationPostgresList(configurationPostgresDTOList);
+        configurationService.savePostgresConf(tableName, "replace", configurationPostgresList.getConfigurationPostgresList());
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping("/add/hba/{tableName}")
+    @Override
+    public void addPghbaConf(@PathVariable String tableName, @RequestBody List<ConfigurationPghbaDTO> configurationPghbaDTOList) throws SQLException {
         ConfigurationPghbaList configurationPghbaList = new ConfigurationPghbaList(configurationPghbaDTOList);
-        configurationService.savePghbaConf(tableName, configurationPghbaList.getConfigurationPghbaList());
+        configurationService.savePghbaConf(tableName, "add",configurationPghbaList.getConfigurationPghbaList());
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping("/replace/hba/{tableName}")
+    @Override
+    public void replacePghbaConf(@PathVariable String tableName, @RequestBody List<ConfigurationPghbaDTO> configurationPghbaDTOList) throws SQLException {
+        ConfigurationPghbaList configurationPghbaList = new ConfigurationPghbaList(configurationPghbaDTOList);
+        configurationService.savePghbaConf(tableName, "replace", configurationPghbaList.getConfigurationPghbaList());
     }
 
     @GetMapping("/get")
     @Override
-    public ConfigurationPostgresDTO getPostgresqlConfigurationWithID(@RequestParam int id) throws SQLException {
+    public ConfigurationPostgresDTO getPostgresConfigurationWithID(@RequestParam int id) throws SQLException {
 
-        ConfigurationPostgres configurationPostgres = configurationService.getPostgresqlConfigurationWithID(id);
+        ConfigurationPostgres configurationPostgres = configurationService.getPostgresConfigurationWithID(id);
         return new ConfigurationPostgresDTO(configurationPostgres);
     }
 }

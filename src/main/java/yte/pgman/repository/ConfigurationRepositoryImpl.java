@@ -22,10 +22,22 @@ public class ConfigurationRepositoryImpl implements ConfigurationRepository {
     private String password;
 
     @Override
-    public void save(String tableName, List<ConfigurationPostgres> configurationPostgresList) throws SQLException {
+    public void savePostgresConf(String tableName, String op, List<ConfigurationPostgres> configurationPostgresList) throws SQLException {
+
         Connection connection = DriverManager.getConnection(url, userName, password);
+        PreparedStatement preparedStatement;
+        if(op.equals("add")) {
+            preparedStatement = connection.prepareStatement("CREATE TABLE " + tableName + "(key VARCHAR(255) , value VARCHAR(255));");
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        }
+        else if(op.equals("replace")) {
+            preparedStatement= connection.prepareStatement("TRUNCATE TABLE " + tableName+";");
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        }
         for (ConfigurationPostgres configurationPostgres: configurationPostgresList) {
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO "+tableName+"(key, value) VALUES (?, ?)");
+            preparedStatement = connection.prepareStatement("INSERT INTO "+tableName+"(key, value) VALUES (?, ?)");
             preparedStatement.setString(1, configurationPostgres.getKey());
             preparedStatement.setString(2, configurationPostgres.getValue());
             preparedStatement.executeUpdate();
@@ -35,10 +47,22 @@ public class ConfigurationRepositoryImpl implements ConfigurationRepository {
     }
 
     @Override
-    public void savePghbaConf(String tableName, List<ConfigurationPghba> configurationPghbaList) throws SQLException {
+    public void savePghbaConf(String tableName, String op, List<ConfigurationPghba> configurationPghbaList) throws SQLException {
+
         Connection connection = DriverManager.getConnection(url, userName, password);
+        PreparedStatement preparedStatement;
+        if(op.equals("add")) {
+            preparedStatement = connection.prepareStatement("CREATE TABLE " + tableName + "(type VARCHAR(255) , database VARCHAR(255) , cuser VARCHAR(255) , address VARCHAR(255) , method VARCHAR(255));");
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        }
+        else if(op.equals("replace")) {
+            preparedStatement= connection.prepareStatement("TRUNCATE TABLE " + tableName+";");
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        }
         for(ConfigurationPghba configurationPghba: configurationPghbaList) {
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO "+tableName+"(type, database, cuser, address, method) VALUES (?, ?, ?, ?, ?)");
+            preparedStatement = connection.prepareStatement("INSERT INTO "+tableName+"(type, database, cuser, address, method) VALUES (?, ?, ?, ?, ?)");
             preparedStatement.setString(1, configurationPghba.getType());
             preparedStatement.setString(2, configurationPghba.getDatabase());
             preparedStatement.setString(3, configurationPghba.getUser());
@@ -50,16 +74,8 @@ public class ConfigurationRepositoryImpl implements ConfigurationRepository {
         connection.close();
     }
 
-    private void createTable(String tableName) throws SQLException{
-        Connection connection = DriverManager.getConnection(url, userName, password);
-        PreparedStatement preparedStatement = connection.prepareStatement("CREATE TABLE " + tableName + " (key VARCHAR(255) , value VARCHAR(255));");
-        preparedStatement.executeQuery();
-        preparedStatement.close();
-        connection.close();
-    }
-
     @Override
-    public ConfigurationPostgres getPostgresqlConfigurationWithID(int id) throws SQLException {
+    public ConfigurationPostgres getPostgresConfigurationWithID(int id) throws SQLException {
         String key = "";
         String value= "";
         Connection connection = DriverManager.getConnection(url, userName, password);

@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ConfigurationService {
 
-    void save(String tableName, List<ConfigurationPostgres> configurationPostgresList) throws SQLException;
-    void savePghbaConf(String tableName, List<ConfigurationPghba> configurationPghbaList) throws SQLException;
-    ConfigurationPostgres getPostgresqlConfigurationWithID(int id) throws SQLException;
+    void savePostgresConf(String tableName, String op, List<ConfigurationPostgres> configurationPostgresList) throws SQLException;
+    void savePghbaConf(String tableName, String op, List<ConfigurationPghba> configurationPghbaList) throws SQLException;
+    ConfigurationPostgres getPostgresConfigurationWithID(int id) throws SQLException;
 }

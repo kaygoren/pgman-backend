@@ -9,7 +9,9 @@ import java.util.List;
 
 public interface ConfigurationController {
 
-    void savePostgresConf(String tableName, List<ConfigurationPostgresDTO> configurationPostgresDTOList) throws SQLException;
-    void savePghbaConf(String tableName, List<ConfigurationPghbaDTO> configurationPghbaDTOList) throws SQLException;
-    ConfigurationPostgresDTO getPostgresqlConfigurationWithID(int id) throws SQLException;
+    void addPostgresConf(String tableName, List<ConfigurationPostgresDTO> configurationPostgresDTOList) throws SQLException;
+    void replacePostgresConf(String tableName, List<ConfigurationPostgresDTO> configurationPostgresDTOList) throws SQLException;
+    void addPghbaConf(String tableName, List<ConfigurationPghbaDTO> configurationPghbaDTOList) throws SQLException;
+    void replacePghbaConf(String tableName, List<ConfigurationPghbaDTO> configurationPghbaDTOList) throws SQLException;
+    ConfigurationPostgresDTO getPostgresConfigurationWithID(int id) throws SQLException;
 }

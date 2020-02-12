@@ -17,17 +17,17 @@ public class ConfigurationServiceImpl implements ConfigurationService {
     private ConfigurationRepository configurationRepository;
 
     @Override
-    public void save(String tableName, List<ConfigurationPostgres> configurationPostgresList) throws SQLException {
-        configurationRepository.save(tableName, configurationPostgresList);
+    public void savePostgresConf(String tableName, String op, List<ConfigurationPostgres> configurationPostgresList) throws SQLException {
+        configurationRepository.savePostgresConf(tableName, op, configurationPostgresList);
     }
 
     @Override
-    public void savePghbaConf(String tableName, List<ConfigurationPghba> configurationPghbaList) throws SQLException {
-        configurationRepository.savePghbaConf(tableName, configurationPghbaList);
+    public void savePghbaConf(String tableName, String op, List<ConfigurationPghba> configurationPghbaList) throws SQLException {
+        configurationRepository.savePghbaConf(tableName, op, configurationPghbaList);
     }
 
     @Override
-    public ConfigurationPostgres getPostgresqlConfigurationWithID(int id) throws SQLException {
-        return configurationRepository.getPostgresqlConfigurationWithID(id);
+    public ConfigurationPostgres getPostgresConfigurationWithID(int id) throws SQLException {
+        return configurationRepository.getPostgresConfigurationWithID(id);
     }
 }
