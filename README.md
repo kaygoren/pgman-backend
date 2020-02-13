@@ -1,2 +1,2 @@
 # pgman-backend
-frontendten atılan post requesti alıp postgresql database'ine kaydetme/güncelleme işlemi yapar.
+It receives post requests from frontend and does create/insert/update/truncate operations into the postgresql database.
