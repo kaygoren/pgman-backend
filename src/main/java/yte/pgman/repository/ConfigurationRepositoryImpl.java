@@ -22,16 +22,16 @@ public class ConfigurationRepositoryImpl implements ConfigurationRepository {
     private String password;
 
     @Override
-    public void savePostgresConf(String tableName, String op, List<ConfigurationPostgres> configurationPostgresList) throws SQLException {
+    public void savePostgresConf(String operation, String tableName, List<ConfigurationPostgres> configurationPostgresList) throws SQLException {
 
         Connection connection = DriverManager.getConnection(url, userName, password);
         PreparedStatement preparedStatement;
-        if(op.equals("add")) {
+        if(operation.equals("add")) {
             preparedStatement = connection.prepareStatement("CREATE TABLE " + tableName + "(key VARCHAR(255) , value VARCHAR(255));");
             preparedStatement.executeUpdate();
             preparedStatement.close();
         }
-        else if(op.equals("replace")) {
+        else if(operation.equals("replace")) {
             preparedStatement= connection.prepareStatement("TRUNCATE TABLE " + tableName+";");
             preparedStatement.executeUpdate();
             preparedStatement.close();
@@ -47,16 +47,16 @@ public class ConfigurationRepositoryImpl implements ConfigurationRepository {
     }
 
     @Override
-    public void savePghbaConf(String tableName, String op, List<ConfigurationPghba> configurationPghbaList) throws SQLException {
+    public void savePghbaConf(String operation, String tableName, List<ConfigurationPghba> configurationPghbaList) throws SQLException {
 
         Connection connection = DriverManager.getConnection(url, userName, password);
         PreparedStatement preparedStatement;
-        if(op.equals("add")) {
+        if(operation.equals("add")) {
             preparedStatement = connection.prepareStatement("CREATE TABLE " + tableName + "(type VARCHAR(255) , database VARCHAR(255) , cuser VARCHAR(255) , address VARCHAR(255) , method VARCHAR(255));");
             preparedStatement.executeUpdate();
             preparedStatement.close();
         }
-        else if(op.equals("replace")) {
+        else if(operation.equals("replace")) {
             preparedStatement= connection.prepareStatement("TRUNCATE TABLE " + tableName+";");
             preparedStatement.executeUpdate();
             preparedStatement.close();
@@ -95,31 +95,4 @@ public class ConfigurationRepositoryImpl implements ConfigurationRepository {
         return new ConfigurationPostgres(id, key, value);
     }
 
-    @Override
-    public ConfigurationPghba getPghbaConfigurationWithID(int id) throws SQLException {
-        String type = "";
-        String database= "";
-        String user = "";
-        String address= "";
-        String method = "";
-
-        Connection connection = DriverManager.getConnection(url, userName, password);
-        PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM pgman_pghba WHERE xxx=?");
-        preparedStatement.setInt(1,id);
-        ResultSet resultSet;
-        resultSet = preparedStatement.executeQuery();
-        while (resultSet.next()) {
-            type = resultSet.getString("type");
-            database= resultSet.getString("database");
-            user = resultSet.getString("user");
-            address= resultSet.getString("address");
-            method = resultSet.getString("method");
-        }
-
-        resultSet.close();
-        preparedStatement.close();
-        connection.close();
-
-        return new ConfigurationPghba(id, type, database, user, address, method);
-    }
 }

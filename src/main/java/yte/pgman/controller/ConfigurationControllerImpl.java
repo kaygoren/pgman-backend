@@ -21,36 +21,21 @@ public class ConfigurationControllerImpl implements ConfigurationController {
     @Autowired
     private ConfigurationService configurationService;
 
-    @CrossOrigin(origins = "http://localhost:3000")
-    @PostMapping("/add/postgresql/{tableName}")
+    @CrossOrigin()
+    @PostMapping("/{operation}/postgresql/{tableName}")
     @Override
-    public void addPostgresConf(@PathVariable String tableName, @RequestBody List<ConfigurationPostgresDTO> configurationPostgresDTOList) throws SQLException {
+    public void savePostgresConf(@PathVariable String operation, @PathVariable String tableName, @RequestBody List<ConfigurationPostgresDTO> configurationPostgresDTOList) throws SQLException {
         ConfigurationPostgresList configurationPostgresList = new ConfigurationPostgresList(configurationPostgresDTOList);
-        configurationService.savePostgresConf(tableName, "add", configurationPostgresList.getConfigurationPostgresList());
+        configurationService.savePostgresConf(operation, tableName, configurationPostgresList.getConfigurationPostgresList());
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
-    @PostMapping("/replace/postgresql/{tableName}")
+//    @CrossOrigin(origins = "http://10.222.60.87:3000")
+    @CrossOrigin()
+    @PostMapping("/{operation}/hba/{tableName}")
     @Override
-    public void replacePostgresConf(@PathVariable String tableName, @RequestBody List<ConfigurationPostgresDTO> configurationPostgresDTOList) throws SQLException {
-        ConfigurationPostgresList configurationPostgresList = new ConfigurationPostgresList(configurationPostgresDTOList);
-        configurationService.savePostgresConf(tableName, "replace", configurationPostgresList.getConfigurationPostgresList());
-    }
-
-    @CrossOrigin(origins = "http://localhost:3000")
-    @PostMapping("/add/hba/{tableName}")
-    @Override
-    public void addPghbaConf(@PathVariable String tableName, @RequestBody List<ConfigurationPghbaDTO> configurationPghbaDTOList) throws SQLException {
+    public void savePghbaConf(@PathVariable String operation, @PathVariable String tableName, @RequestBody List<ConfigurationPghbaDTO> configurationPghbaDTOList) throws SQLException {
         ConfigurationPghbaList configurationPghbaList = new ConfigurationPghbaList(configurationPghbaDTOList);
-        configurationService.savePghbaConf(tableName, "add",configurationPghbaList.getConfigurationPghbaList());
-    }
-
-    @CrossOrigin(origins = "http://localhost:3000")
-    @PostMapping("/replace/hba/{tableName}")
-    @Override
-    public void replacePghbaConf(@PathVariable String tableName, @RequestBody List<ConfigurationPghbaDTO> configurationPghbaDTOList) throws SQLException {
-        ConfigurationPghbaList configurationPghbaList = new ConfigurationPghbaList(configurationPghbaDTOList);
-        configurationService.savePghbaConf(tableName, "replace", configurationPghbaList.getConfigurationPghbaList());
+        configurationService.savePghbaConf(operation, tableName, configurationPghbaList.getConfigurationPghbaList());
     }
 
     @GetMapping("/get")
