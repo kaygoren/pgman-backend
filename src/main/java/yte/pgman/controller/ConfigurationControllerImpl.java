@@ -21,7 +21,7 @@ public class ConfigurationControllerImpl implements ConfigurationController {
     @Autowired
     private ConfigurationService configurationService;
 
-    @CrossOrigin()
+    @CrossOrigin
     @PostMapping("/{operation}/postgresql/{tableName}")
     @Override
     public void savePostgresConf(@PathVariable String operation, @PathVariable String tableName, @RequestBody List<ConfigurationPostgresDTO> configurationPostgresDTOList) throws SQLException {
@@ -30,7 +30,7 @@ public class ConfigurationControllerImpl implements ConfigurationController {
     }
 
 //    @CrossOrigin(origins = "http://10.222.60.87:3000")
-    @CrossOrigin()
+    @CrossOrigin
     @PostMapping("/{operation}/hba/{tableName}")
     @Override
     public void savePghbaConf(@PathVariable String operation, @PathVariable String tableName, @RequestBody List<ConfigurationPghbaDTO> configurationPghbaDTOList) throws SQLException {
